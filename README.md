@@ -35,3 +35,5 @@ export default {
 ✔ Select a framework: › React
 ✔ Select a variant: › TypeScript + SWC
 ```
+
+## forで要素を配置とか？
