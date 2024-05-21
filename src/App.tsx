@@ -102,7 +102,10 @@ export default function Game() {
       </li>
     );
   })
-console.log('rendering Game')
+
+  // 初期表示時に何故か2回呼ばれる
+  console.log('rendering Game')
+
   return (
     <div className="game">
       <div className="game-board">

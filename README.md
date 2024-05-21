@@ -39,7 +39,7 @@ export default {
 ## forで要素を配置とか？
 
 ## ハンドラで二つのstateをsetすると二回レンダリングされる？
-例えば、
+例えばこれ、
 ```js
 function handlePlay(nextSquares: (string | null)[]) {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
@@ -47,4 +47,3 @@ function handlePlay(nextSquares: (string | null)[]) {
     setCurrentMove(nextHistory.length - 1);
   }
 ```
-が実行されるとGameが2回レンダリングされている
