@@ -77,6 +77,12 @@ body {
   display: table;
 }
 
+.board-container {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .status {
   margin-bottom: 10px;
 }
