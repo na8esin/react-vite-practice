@@ -82,6 +82,7 @@ export default function Game() {
   // それぞれのマス目をクリックしたときの最後に呼ばれる処理
   // nextSquares: クリックしたマス目の値が更新された後の盤面。 currentBoard的な名前の方がわかりやすいかも
   function handlePlay(nextSquares: (string | null)[]) {
+    // ここの処理で、歴史を塗り替えた場合に、それ以降の歴史を削除する部分も含まれる
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
@@ -92,13 +93,20 @@ export default function Game() {
   }
 
   const moves = history.map((_, move) => {
-    const description = (move > 0)?
+    const descriptionButton = (move > 0)?
       'Go to move #' + move:
       'Go to game start';
 
+    const description = (move === 0)?
+      'You are at Game start':
+      'You are at move #' + move;
+
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        {move === currentMove ?
+          (<b>{description}</b>) :
+          (<button onClick={() => jumpTo(move)}>{descriptionButton}</button>)
+        }
       </li>
     );
   })
