@@ -36,24 +36,24 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
   const winner = calculateWinner(squares);
 
+  const boardRows =
+    [0, 1, 2].map((i) => {
+      return (
+        <div key={i} className="board-row">
+          {[0, 1, 2].map((_, j) => (
+            <Square
+              key={j + 3*i}
+              value={squares[j + 3*i]}
+              onSquareClick={() => handleClick(j + 3*i)} />
+          ))}
+        </div>
+      );
+    });
+
   return (
     <>
       <CurrentGameStatus winner={winner} xIsNext={xIsNext} />
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+      {boardRows}
     </>
   );
 }
