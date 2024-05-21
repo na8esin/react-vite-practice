@@ -74,22 +74,42 @@ function CurrentGameStatus({winner, xIsNext}: CurrentGameStatus) {
 type History = (string | null)[][];
 
 export default function Game() {
-  const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState<History>([Array(9).fill(null)]);
-  const currentSquares = history[history.length - 1];
+  const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
 
+  // それぞれのマス目をクリックしたときの最後に呼ばれる処理
+  // nextSquares: クリックしたマス目の値が更新された後の盤面。 currentBoard的な名前の方がわかりやすいかも
   function handlePlay(nextSquares: (string | null)[]) {
-    setHistory([...history, nextSquares]);
-    setXIsNext(!xIsNext);
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
   }
 
+  function jumpTo(nextMove: number) {
+    setCurrentMove(nextMove);
+  }
+
+  const moves = history.map((_, move) => {
+    const description = (move > 0)?
+      'Go to move #' + move:
+      'Go to game start';
+
+    return (
+      <li key={move}>
+        <button onClick={() => jumpTo(move)}>{description}</button>
+      </li>
+    );
+  })
+console.log('rendering Game')
   return (
     <div className="game">
       <div className="game-board">
       <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{/*TODO*/}</ol>
+        <ol>{moves}</ol>
       </div>
     </div>
   );
