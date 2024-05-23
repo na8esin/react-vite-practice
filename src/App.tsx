@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import './index.css'
+import Toggle from "./Toggle.tsx";
 
 interface SquareProps {
   value: string | null;
@@ -105,16 +107,18 @@ export default function Game() {
     );
   })
 
-  // 初期表示時に何故か2回呼ばれる
-  console.log('rendering Game')
-
   return (
     <div className="game">
       <div className="game-board">
       <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        <div style={{ paddingInlineStart: '40px' }}>
+          <Toggle />
+        </div>
+        <ol>
+          {moves}
+        </ol>
       </div>
     </div>
   );

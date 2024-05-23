@@ -1,0 +1,35 @@
+.toggleButton {
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  height: 25px;
+  border-radius: 50px;
+  background-color: #dddddd;
+  cursor: pointer;
+  transition: background-color .4s;
+}
+
+.toggleButton:has(:checked) {
+  background-color: #4bd865;
+}
+
+.toggleButton::after { /* 押せるところの丸の部分 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+  background-color: #fff;
+  content: '';
+  transition: left .4s;
+}
+
+.toggleButton:has(:checked)::after {
+    left: 25px;
+}
+
+.toggleButton input {
+    display: none;
+}
