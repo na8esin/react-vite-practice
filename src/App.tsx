@@ -115,7 +115,8 @@ export default function Game() {
 // 単純に関数に抽出してみた
 function historyToMoves(
   history: (string | null)[][],
-  currentMove: number, jumpTo: (move: number) => void,
+  currentMove: number,
+  jumpTo: (move: number) => void,
   onOff: boolean
 ): JSX.Element[] {
   const moves = history.map((_, move) => {
