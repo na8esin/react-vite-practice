@@ -47,3 +47,6 @@ function handlePlay(nextSquares: (string | null)[]) {
     setCurrentMove(nextHistory.length - 1);
   }
 ```
+
+## 単純に関数に切り出すとパフォーマンスが悪くなったりしない？
+flutterで問題になるやつ

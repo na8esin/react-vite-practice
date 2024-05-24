@@ -72,6 +72,7 @@ type History = (string | null)[][];
 export default function Game() {
   const [history, setHistory] = useState<History>([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [onOff, setOnOff] = useState(true);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -88,6 +89,35 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+  function handleToggle() {
+    setOnOff(!onOff);
+  }
+
+  const moves = historyToMoves(history, currentMove, jumpTo, onOff);
+
+  return (
+    <div className="game">
+      <div className="game-board">
+      <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <div style={{ paddingInlineStart: '40px' }}>
+          <Toggle onToggle={handleToggle} />
+        </div>
+        <ol>
+          {moves}
+        </ol>
+      </div>
+    </div>
+  );
+}
+
+// 単純に関数に抽出してみた
+function historyToMoves(
+  history: (string | null)[][],
+  currentMove: number, jumpTo: (move: number) => void,
+  onOff: boolean
+): JSX.Element[] {
   const moves = history.map((_, move) => {
     const descriptionButton = (move > 0)?
       'Go to move #' + move:
@@ -105,26 +135,12 @@ export default function Game() {
         }
       </li>
     );
-  })
+  });
 
-  return (
-    <div className="game">
-      <div className="game-board">
-      <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-      </div>
-      <div className="game-info">
-        <div style={{ paddingInlineStart: '40px' }}>
-          <Toggle />
-        </div>
-        <ol>
-          {moves}
-        </ol>
-      </div>
-    </div>
-  );
+  return onOff ? moves : moves.reverse();
 }
 
-function calculateWinner(squares: (string | null)[]): string | null{
+function calculateWinner(squares: (string | null)[]): string | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
