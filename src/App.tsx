@@ -102,7 +102,7 @@ export default function Game() {
         <div style={{ paddingInlineStart: '40px' }}>
           <Toggle onToggle={handleToggle} />
         </div>
-        <ol>
+        <ol reversed={!onOff}>
           <Moves history={history} currentMove={currentMove} jumpTo={jumpTo} onOff={onOff} />
         </ol>
       </div>
