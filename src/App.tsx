@@ -93,8 +93,6 @@ export default function Game() {
     setOnOff(!onOff);
   }
 
-  const moves = historyToMoves(history, currentMove, jumpTo, onOff);
-
   return (
     <div className="game">
       <div className="game-board">
@@ -105,20 +103,24 @@ export default function Game() {
           <Toggle onToggle={handleToggle} />
         </div>
         <ol>
-          {moves}
+          <Moves history={history} currentMove={currentMove} jumpTo={jumpTo} onOff={onOff} />
         </ol>
       </div>
     </div>
   );
 }
 
-// 単純に関数に抽出してみた
-function historyToMoves(
-  history: (string | null)[][],
-  currentMove: number,
-  jumpTo: (move: number) => void,
-  onOff: boolean
-): JSX.Element[] {
+interface MovesProps {
+  history: (string | null)[][];
+  currentMove: number;
+  jumpTo: (move: number) => void;
+  onOff: boolean;
+}
+
+// コンポーネントにしてみた
+function Moves(
+  { history, currentMove, jumpTo, onOff }: MovesProps
+) {
   const moves = history.map((_, move) => {
     const descriptionButton = (move > 0)?
       'Go to move #' + move:
