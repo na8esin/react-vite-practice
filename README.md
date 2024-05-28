@@ -37,6 +37,7 @@ export default {
 ```
 
 ## forで要素を配置とか？
+Array.fromを使ってみた
 
 ## ハンドラで二つのstateをsetすると二回レンダリングされる？
 例えばこれ、
@@ -47,6 +48,16 @@ function handlePlay(nextSquares: (string | null)[]) {
     setCurrentMove(nextHistory.length - 1);
   }
 ```
+そんなことはなさそう。
 
 ## 単純に関数に切り出すとパフォーマンスが悪くなったりしない？
 flutterで問題になるやつ
+
+## 勝利につながった 3 つのマス目をハイライト表示する
+https://ja.react.dev/learn/tutorial-tic-tac-toe#wrapping-up
+
+buttonタグの間にdivタグを入れてから、X, O入れるようにするとsquares系の変数を全部変えないといけなさそう。
+
+## typeのtypeってわかりづらい？
+`type History = SquareValue[][]`
+を宣言するなら、そのままSquareValue[][]を登場させる方が分かりやすいか？

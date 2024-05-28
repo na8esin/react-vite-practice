@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './index.css'
 import Toggle from "./Toggle.tsx";
 
+type SquareValue = 'X' | 'O' | null;
+
 interface SquareProps {
   value: string | null;
   onSquareClick: () => void;
@@ -17,8 +19,8 @@ function Square({value, onSquareClick}: SquareProps) {
 
 interface BoardProps {
   xIsNext: boolean;
-  squares: (string | null)[];
-  onPlay: (squares: (string | null)[]) => void;
+  squares: SquareValue[];
+  onPlay: (squares: SquareValue[]) => void;
 }
 
 function Board({ xIsNext, squares, onPlay }: BoardProps) {
@@ -67,10 +69,8 @@ function CurrentGameStatus({winner, xIsNext}: CurrentGameStatus) {
   return <div className="status">{status}</div>;
 }
 
-type History = (string | null)[][];
-
 export default function Game() {
-  const [history, setHistory] = useState<History>([Array(9).fill(null)]);
+  const [history, setHistory] = useState<SquareValue[][]>([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const [onOff, setOnOff] = useState(true);
   const xIsNext = currentMove % 2 === 0;
@@ -78,7 +78,7 @@ export default function Game() {
 
   // それぞれのマス目をクリックしたときの最後に呼ばれる処理
   // nextSquares: クリックしたマス目の値が更新された後の盤面。 currentBoard的な名前の方がわかりやすいかも
-  function handlePlay(nextSquares: (string | null)[]) {
+  function handlePlay(nextSquares: SquareValue[]) {
     // ここの処理で、歴史を塗り替えた場合に、それ以降の歴史を削除する部分も含まれる
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
@@ -111,7 +111,7 @@ export default function Game() {
 }
 
 interface MovesProps {
-  history: (string | null)[][];
+  history: SquareValue[][];
   currentMove: number;
   jumpTo: (move: number) => void;
   onOff: boolean;
@@ -143,7 +143,7 @@ function Moves(
   return onOff ? moves : moves.reverse();
 }
 
-function calculateWinner(squares: (string | null)[]): string | null {
+function calculateWinner(squares: SquareValue[]): string | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
