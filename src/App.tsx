@@ -25,8 +25,10 @@ interface BoardProps {
 
 function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
+  const winner = calculateWinner(squares);
+
   function handleClick(i: number) {
-    if (squares[i] || calculateWinner(squares)) return;
+    if (squares[i] || winner) return;
 
     // コピーするだけ
     const nextSquares = squares.slice();
@@ -37,8 +39,6 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     }
     onPlay(nextSquares);
   }
-
-  const winner = calculateWinner(squares);
 
   return (
     <>
@@ -143,7 +143,7 @@ function Moves(
   return onOff ? moves : moves.reverse();
 }
 
-function calculateWinner(squares: SquareValue[]): string | null {
+function calculateWinner(squares: SquareValue[]): SquareValue {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
