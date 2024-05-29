@@ -25,10 +25,10 @@ interface BoardProps {
 
 function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
-  const winner = calculateWinner(squares);
+  const wonLine = calculateWonLine(squares);
 
   function handleClick(i: number) {
-    if (squares[i] || winner) return;
+    if (squares[i] || wonLine) return;
 
     // コピーするだけ
     const nextSquares = squares.slice();
@@ -42,7 +42,7 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
   return (
     <>
-      <CurrentGameStatus winner={winner} xIsNext={xIsNext} />
+      <CurrentGameStatus wonLine={wonLine} xIsNext={xIsNext} />
       <div className="board-container">
         {
           Array.from({ length: 9 }, (_, i) =>
@@ -57,12 +57,13 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 }
 
 interface CurrentGameStatus {
-  winner: string | null;
+  wonLine: number[] | null
   xIsNext: boolean;
 }
 
-function CurrentGameStatus({winner, xIsNext}: CurrentGameStatus) {
-  const status = (winner) ?
+function CurrentGameStatus({wonLine, xIsNext}: CurrentGameStatus) {
+  const winner = (xIsNext ? "O" : "X")
+  const status = (wonLine) ?
     "Winner: " + winner :
     "Next player: " + (xIsNext ? "X" : "O");
 
@@ -143,7 +144,9 @@ function Moves(
   return onOff ? moves : moves.reverse();
 }
 
-function calculateWinner(squares: SquareValue[]): SquareValue {
+// 元々は、OXをを返していたが、勝利条件のラインを返すように変更。
+// lineと勝者一緒に返す変更でも良さそうだけど、勝者は呼び出しもとで判別できるため不要だと思う
+function calculateWonLine(squares: SquareValue[]): number[] | null {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -157,7 +160,7 @@ function calculateWinner(squares: SquareValue[]): SquareValue {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return lines[i];
     }
   }
   return null;
