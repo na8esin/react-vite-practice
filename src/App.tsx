@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import './index.css'
+import { useState } from "react";
+import "./index.css";
 import Toggle from "./Toggle.tsx";
 
-type SquareValue = 'X' | 'O' | null;
+type SquareValue = "X" | "O" | null;
 
 interface SquareProps {
   value: string | null;
@@ -11,7 +11,7 @@ interface SquareProps {
 
 // ここの中で分岐処理を入れるとコンポーネントの再利用性としてはどうなんだろ？
 // なんだかんだ、storybookのことがわかってないといけないのかも？
-function Square({value, onSquareClick}: SquareProps) {
+function Square({ value, onSquareClick }: SquareProps) {
   return (
     <button className="square" onClick={onSquareClick}>
       {value}
@@ -26,7 +26,6 @@ interface BoardProps {
 }
 
 function Board({ xIsNext, squares, onPlay }: BoardProps) {
-
   const wonLine = calculateWonLine(squares);
 
   function handleClick(i: number) {
@@ -35,9 +34,9 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     // コピーするだけ
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = 'X';
+      nextSquares[i] = "X";
     } else {
-      nextSquares[i] = 'O';
+      nextSquares[i] = "O";
     }
     onPlay(nextSquares);
   }
@@ -46,34 +45,36 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     <>
       <CurrentGameStatus wonLine={wonLine} xIsNext={xIsNext} />
       <div className="board-container">
-        {
-          Array.from({ length: 9 }, (_, i) =>
-            <Square
-              key={i}
-              value={squares[i]}
-              onSquareClick={() => handleClick(i)} />)
-        }
+        {Array.from({ length: 9 }, (_, i) => (
+          <Square
+            key={i}
+            value={squares[i]}
+            onSquareClick={() => handleClick(i)}
+          />
+        ))}
       </div>
     </>
   );
 }
 
 interface CurrentGameStatus {
-  wonLine: number[] | null
+  wonLine: number[] | null;
   xIsNext: boolean;
 }
 
-function CurrentGameStatus({wonLine, xIsNext}: CurrentGameStatus) {
-  const winner = (xIsNext ? "O" : "X")
-  const status = (wonLine) ?
-    "Winner: " + winner :
-    "Next player: " + (xIsNext ? "X" : "O");
+function CurrentGameStatus({ wonLine, xIsNext }: CurrentGameStatus) {
+  const winner = xIsNext ? "O" : "X";
+  const status = wonLine
+    ? "Winner: " + winner
+    : "Next player: " + (xIsNext ? "X" : "O");
 
   return <div className="status">{status}</div>;
 }
 
 export default function Game() {
-  const [history, setHistory] = useState<SquareValue[][]>([Array(9).fill(null)]);
+  const [history, setHistory] = useState<SquareValue[][]>([
+    Array(9).fill(null),
+  ]);
   const [currentMove, setCurrentMove] = useState(0);
   const [onOff, setOnOff] = useState(true);
   const xIsNext = currentMove % 2 === 0;
@@ -99,14 +100,19 @@ export default function Game() {
   return (
     <div className="game">
       <div className="game-board">
-      <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <div style={{ paddingInlineStart: '40px' }}>
+        <div style={{ paddingInlineStart: "40px" }}>
           <Toggle onToggle={handleToggle} />
         </div>
         <ol reversed={!onOff}>
-          <Moves history={history} currentMove={currentMove} jumpTo={jumpTo} onOff={onOff} />
+          <Moves
+            history={history}
+            currentMove={currentMove}
+            jumpTo={jumpTo}
+            onOff={onOff}
+          />
         </ol>
       </div>
     </div>
@@ -121,24 +127,21 @@ interface MovesProps {
 }
 
 // コンポーネントにしてみた
-function Moves(
-  { history, currentMove, jumpTo, onOff }: MovesProps
-) {
+function Moves({ history, currentMove, jumpTo, onOff }: MovesProps) {
   const moves = history.map((_, move) => {
-    const descriptionButton = (move > 0)?
-      'Go to move #' + move:
-      'Go to game start';
+    const descriptionButton =
+      move > 0 ? "Go to move #" + move : "Go to game start";
 
-    const description = (move === 0)?
-      'You are at Game start':
-      'You are at move #' + move;
+    const description =
+      move === 0 ? "You are at Game start" : "You are at move #" + move;
 
     return (
       <li key={move}>
-        {move === currentMove ?
-          (<b>{description}</b>) :
-          (<button onClick={() => jumpTo(move)}>{descriptionButton}</button>)
-        }
+        {move === currentMove ? (
+          <b>{description}</b>
+        ) : (
+          <button onClick={() => jumpTo(move)}>{descriptionButton}</button>
+        )}
       </li>
     );
   });
@@ -159,7 +162,7 @@ function calculateWonLine(squares: SquareValue[]): number[] | null {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
