@@ -9,6 +9,8 @@ interface SquareProps {
   onSquareClick: () => void;
 }
 
+// ここの中で分岐処理を入れるとコンポーネントの再利用性としてはどうなんだろ？
+// なんだかんだ、storybookのことがわかってないといけないのかも？
 function Square({value, onSquareClick}: SquareProps) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -145,6 +147,8 @@ function Moves(
 }
 
 // 元々は、OXをを返していたが、勝利条件のラインを返すように変更。
+// nullじゃないときは勝負が決まっているということ
+//
 // lineと勝者一緒に返す変更でも良さそうだけど、勝者は呼び出しもとで判別できるため不要だと思う
 function calculateWonLine(squares: SquareValue[]): number[] | null {
   const lines = [
