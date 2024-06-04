@@ -61,3 +61,6 @@ buttonタグの間にdivタグを入れてから、X, O入れるようにする�
 ## typeのtypeってわかりづらい？
 `type History = SquareValue[][]`
 を宣言するなら、そのままSquareValue[][]を登場させる方が分かりやすいか？
+
+## prettier
+vscodeでautosaveにしている場合も⌘+sを押す必要がある。autosave自体は何も押さなくてもされる。
