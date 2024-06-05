@@ -64,3 +64,5 @@ buttonタグの間にdivタグを入れてから、X, O入れるようにする�
 
 ## prettier
 vscodeでautosaveにしている場合も⌘+sを押す必要がある。autosave自体は何も押さなくてもされる。
+
+## vscode上でlintされずに、tscで怒られる
