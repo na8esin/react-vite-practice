@@ -1,23 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import Toggle from "./components/Toggle.tsx";
-
-type SquareValue = "X" | "O" | null;
-
-interface SquareProps {
-  value: string | null;
-  onSquareClick: () => void;
-}
-
-// ここの中で分岐処理を入れるとコンポーネントの再利用性としてはどうなんだろ？
-// なんだかんだ、storybookのことがわかってないといけないのかも？
-function Square({ value, onSquareClick }: SquareProps) {
-  return (
-    <button className="square" onClick={onSquareClick}>
-      {value}
-    </button>
-  );
-}
+import { Square, SquareValue } from "./components/Square.tsx";
 
 interface BoardProps {
   xIsNext: boolean;
