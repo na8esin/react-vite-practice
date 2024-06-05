@@ -65,4 +65,21 @@ buttonタグの間にdivタグを入れてから、X, O入れるようにする�
 ## prettier
 vscodeでautosaveにしている場合も⌘+sを押す必要がある。autosave自体は何も押さなくてもされる。
 
-## vscode上でlintされずに、tscで怒られる
+## srcのサブディレクトリのコードが、vscode上でlintされない
+tscではちゃんとエラーになる
+
+tsconfig.jsonの`"include": ["src"],`を`"include": ["src/**/*"],`にするとちゃんと怒られる。
+と思ったけど、気のせいかもしれない。。。
+
+## .eslintrc.cjsってなに？
+https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file
+
+今、ファイル名違う気がするけど↑
+
+https://eslint.org/docs/latest/use/configure/configuration-files-deprecated
+
+↑やっぱりdeprecatedになってるな。
+
+### どこで入りこんだ？
+`npm create vite@latest`のタイミング。
+`npx storybook@latest init`でも更新されてる
