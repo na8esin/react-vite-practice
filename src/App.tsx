@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./index.css";
-import Toggle from "./Toggle.tsx";
+import Toggle from "./components/Toggle.tsx";
 
 type SquareValue = "X" | "O" | null;
 
