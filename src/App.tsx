@@ -33,6 +33,7 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
           <Square
             key={i}
             value={squares[i]}
+            partOfWonLine={!!wonLine?.some((e) => e === i)}
             onSquareClick={() => handleClick(i)}
           />
         ))}
