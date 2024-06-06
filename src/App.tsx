@@ -79,7 +79,7 @@ function gameStatus(
 
 export default function Game() {
   const [history, setHistory] = useState<SquareValue[][]>([
-    Array(9).fill(null),
+    Array<SquareValue>(9).fill(null),
   ]);
   const [currentMove, setCurrentMove] = useState(0);
   const [onOff, setOnOff] = useState(true);
