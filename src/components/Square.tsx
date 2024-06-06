@@ -16,7 +16,6 @@ interface SquareProps {
 const Button = styled.button<{ $partOfWonLine?: boolean; }>`
   background: ${props => props.$partOfWonLine ? "aqua" : "white"};
   border: 1px solid #999;
-  float: left;
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;

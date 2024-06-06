@@ -83,3 +83,7 @@ https://eslint.org/docs/latest/use/configure/configuration-files-deprecated
 ### どこで入りこんだ？
 `npm create vite@latest`のタイミング。
 `npx storybook@latest init`でも更新されてる
+
+## floatって別のコンポーネントに影響与えちゃうから良くない
+
+## 引き分けやってない
