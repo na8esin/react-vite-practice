@@ -25,9 +25,18 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     onPlay(nextSquares);
   }
 
+  // 引き分け条件
+  // 現在の盤面が全て埋まってるにも関わらず、勝利ラインの計算結果がnull
+  const isDraw = squares.every((e) => e != null) && wonLine == null;
+
   return (
     <>
-      <CurrentGameStatus wonLine={wonLine} xIsNext={xIsNext} />
+      {/*
+        ここの変数にdrawかどうかも入れるとなると、引数が増えすぎて嫌だけどやむなし。
+        対案としては、squaresを中に入れて、wonLineを計算しつつ、drawの判定すれば良さそうだけど、
+        もっと複雑なゲームの場合はそこそこ重たい処理だろうし、何度も実行したくない。
+      */}
+      <CurrentGameStatus text={gameStatus(wonLine, xIsNext, isDraw)} />
       <div className="board-container">
         {Array.from({ length: 9 }, (_, i) => (
           <Square
@@ -43,17 +52,27 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 }
 
 interface CurrentGameStatus {
-  wonLine: number[] | null;
-  xIsNext: boolean;
+  text: string;
 }
 
-function CurrentGameStatus({ wonLine, xIsNext }: CurrentGameStatus) {
-  const winner = xIsNext ? "O" : "X";
-  const status = wonLine
-    ? "Winner: " + winner
-    : "Next player: " + (xIsNext ? "X" : "O");
+function CurrentGameStatus({ text }: CurrentGameStatus) {
+  return <div className="status">{text}</div>;
+}
 
-  return <div className="status">{status}</div>;
+// drawも判定
+function gameStatus(
+  wonLine: number[] | null,
+  xIsNext: boolean,
+  isDraw: boolean
+): string {
+  const winner = xIsNext ? "O" : "X";
+  const nextPlayer = xIsNext ? "X" : "O";
+
+  if (isDraw) return "Draw";
+
+  if (wonLine) return "Winner: " + winner;
+
+  return "Next player: " + nextPlayer;
 }
 
 export default function Game() {
@@ -139,6 +158,8 @@ function Moves({ history, currentMove, jumpTo, onOff }: MovesProps) {
 // nullじゃないときは勝負が決まっているということ
 //
 // lineと勝者一緒に返す変更でも良さそうだけど、勝者は呼び出しもとで判別できるため不要だと思う
+//
+// 引き分けも判定するとどう？空配列が帰ってきた時に引き分けとか。
 function calculateWonLine(squares: SquareValue[]): number[] | null {
   const lines = [
     [0, 1, 2],
