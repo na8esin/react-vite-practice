@@ -112,6 +112,7 @@ interface MovesProps {
 }
 
 // コンポーネントにしてみた
+// この名前のままstorybookにするとデザイナーさんは意味わからないだろうなぁ。
 function Moves({ history, currentMove, jumpTo, onOff }: MovesProps) {
   const moves = history.map((_, move) => {
     const descriptionButton =
