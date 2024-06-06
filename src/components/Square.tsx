@@ -13,8 +13,8 @@ interface SquareProps {
   onSquareClick: () => void;
 }
 
-const Button = styled.button`
-  background: #fff;
+const Button = styled.button<{ $partOfWonLine?: boolean; }>`
+  background: ${props => props.$partOfWonLine ? "aqua" : "white"};
   border: 1px solid #999;
   float: left;
   font-size: 24px;
@@ -29,13 +29,9 @@ const Button = styled.button`
 `
 
 export function Square({ value, partOfWonLine, onSquareClick }: SquareProps) {
-  const content = partOfWonLine
-    ? <div style={{backgroundColor: 'deepskyblue'}}>{value}</div>
-    : value;
-
   return (
-    <Button onClick={onSquareClick}>
-      {content}
+    <Button $partOfWonLine={partOfWonLine} onClick={onSquareClick}>
+      {value}
     </Button>
   );
 }
