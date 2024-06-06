@@ -27,6 +27,7 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
 
   // 引き分け条件
   // 現在の盤面が全て埋まってるにも関わらず、勝利ラインの計算結果がnull
+  // someを使って、全体を反転させた方が、計算量は少なくなりそうだけど、かなりわかりづらい。
   const isDraw = squares.every((e) => e != null) && wonLine == null;
 
   return (
@@ -55,6 +56,7 @@ interface CurrentGameStatus {
   text: string;
 }
 
+// もはやコンポーネント化する理由が薄くなった
 function CurrentGameStatus({ text }: CurrentGameStatus) {
   return <div className="status">{text}</div>;
 }
