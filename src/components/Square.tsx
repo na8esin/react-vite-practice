@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 export type SquareValue = "X" | "O" | null;
 
 // type SquareProps = {
@@ -11,14 +13,29 @@ interface SquareProps {
   onSquareClick: () => void;
 }
 
+const Button = styled.button`
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+`
+
 export function Square({ value, partOfWonLine, onSquareClick }: SquareProps) {
   const content = partOfWonLine
-    ? <div style={{backgroundColor: 'indigo'}}>{value}</div>
+    ? <div style={{backgroundColor: 'deepskyblue'}}>{value}</div>
     : value;
 
   return (
-    <button className="square" onClick={onSquareClick}>
+    <Button onClick={onSquareClick}>
       {content}
-    </button>
+    </Button>
   );
 }
