@@ -86,12 +86,12 @@ https://eslint.org/docs/latest/use/configure/configuration-files-deprecated
 
 ## floatって別のコンポーネントに影響与えちゃうから良くない
 知らないうちに解決してた
-## 引き分けやってない
+## 引き分けやってない -> 完了
 currentSquaresが全てnullでないということで判定する
 
 状態が、勝ち、負け、引き分け、勝負の途中の4つある
 ## Square.storyを作る
-
+とりあえずOK
 ### なんかバグっぽいやつ
 `type SquareValue = "X" | "O" | null`をstorybookで表示するとバグる
 
