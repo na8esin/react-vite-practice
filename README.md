@@ -91,3 +91,11 @@ currentSquaresが全てnullでないということで判定する
 
 状態が、勝ち、負け、引き分け、勝負の途中の4つある
 ## Square.storyを作る
+
+### なんかバグっぽいやつ
+`type SquareValue = "X" | "O" | null`をstorybookで表示するとバグる
+
+https://github.com/storybookjs/storybook/issues/25305
+
+https://react-docgen.dev/playground
+でみたけど、わからん。結局argTypesで対応した

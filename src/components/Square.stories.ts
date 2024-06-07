@@ -8,7 +8,10 @@ const meta = {
   tags: ["autodocs"],
   args: {
     onSquareClick: fn()
-  }
+  },
+  argTypes: {
+    value: { options: ['X', 'O', ''], },
+  },
 } satisfies Meta<typeof Square>;
 
 export default meta;
